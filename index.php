@@ -2,11 +2,11 @@
 session_start();
 include_once 'setting.php';
 $CONNECT = mysqli_connect(HOST, USER, PASS, DB) or die ('Ошибка соединения с сервером');
-if($CONNECT) echo 'ok';
-else echo 'no';
+//if($CONNECT) echo 'ok';
+//else echo 'no';
 
 $url = str_replace("newproject/", "", $_SERVER['REQUEST_URI']);
-var_dump($url);
+//var_dump($url);
     if($url == '/'){
         $page = 'index';
         $module = 'index';
@@ -30,6 +30,11 @@ else if ($page == 'registration') include 'pages/registration.php';
 else if ($page == 'profile') include 'pages/ptofile.php';
 else if ($page == 'account') include 'handlers/account.php' ;
 else if ($page == 'login') include 'pages/login.php';
+else if ($page == 'confirmation') include 'pages/confirmation.php';
+
+function formChars($string){
+    return nl2br(htmlspecialchars(trim($string), ENT_QUOTES), false);
+}
 
 function Head($title, $style){
     echo '<!DOCTYPE html>
@@ -47,9 +52,11 @@ function Footer(){
     </html>';
 }
 
-function messageSend($error_msg){
+function messageSend($error_msg, $redirect = ''){
     $_SESSION['error_message'] = '<p style="color: red;" class="error">' . $error_msg . '</p>';
-    echo 'error';
+    if($redirect){
+        $_SERVER['HTTP_REFERER'] = $redirect;
+    }
     exit(header('Location: ' . $_SERVER['HTTP_REFERER']));
 }
 
