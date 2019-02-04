@@ -27,10 +27,19 @@ $url = str_replace("newproject/", "", $_SERVER['REQUEST_URI']);
 
 if($page == 'index' && $module == 'index') include 'pages/index.php';
 else if ($page == 'registration') include 'pages/registration.php';
-else if ($page == 'profile') include 'pages/ptofile.php';
 else if ($page == 'account') include 'handlers/account.php' ;
 else if ($page == 'login') include 'pages/login.php';
 else if ($page == 'confirmation') include 'pages/confirmation.php';
+else if ($page == 'profile') include 'pages/profile.php';
+
+function Ulogin($param){
+    if($param == 1 and empty($_SESSION['user_log_in'])){
+        messageSend('Указанная страница доступна только для пользователей, чтобы просматривать эту страницу, войдите в свою учётную запись', '/newproject/login');
+    }
+    else if ($param == 0 and $_SESSION['user_log_in'] == 1){
+        header('Location: /newproject/profile');
+    }
+}
 
 function formChars($string){
     return nl2br(htmlspecialchars(trim($string), ENT_QUOTES), false);
@@ -63,7 +72,7 @@ function messageSend($error_msg, $redirect = ''){
 function messageShow(){
     if($_SESSION['error_message']){
         $message = $_SESSION['error_message'];
-        echo $message;
+        echo $message . '<br />' . $_SERVER['HTTP_REFERER'] . '<br />';
         $_SESSION['error_message'] = array();
     }
 }
