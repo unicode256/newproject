@@ -32,13 +32,14 @@ if($module == 'registration' and $_POST['submit']){
         messageSend('Этот адрес уже существует');
     }
     mysqli_query($CONNECT, "INSERT INTO `USERS` (`activation`, `name`, `email`, `password`) VALUES (0, '$name', '$email', '$password')");
+
     if(mysqli_error($CONNECT)){
         exit(mysqli_error($CONNECT));
     }
     $enc_email = str_replace("=", "", base64_encode($email));
     $result = mail($email, "Conformation", "Чтобы подтвердить перейдите по ссылке: https://antirust-requisitio.000webhostapp.com/account/confirm/email/$enc_email");
     if(!$result){
-        messageSend('не получилось отправить письмо(((('); 
+        messageSend('не получилось отправить письмо((((');
     }
     messageSend('Регистрация заврешена, на указанный емаил отправлено письмо для подтверждения регистрации');
 }
