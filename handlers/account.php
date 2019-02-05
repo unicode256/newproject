@@ -31,12 +31,14 @@ if($module == 'registration' and $_POST['submit']){
     if($row['email']){
         messageSend('Этот адрес уже существует');
     }
-    mysqli_query($CONNECT, "INSERT INTO `users` (`activation`, `name`, `email`, `password`) VALUES (1, '$name', '$email', '$password')");
+    mysqli_query($CONNECT, "INSERT INTO `users` (`activation`, `name`, `email`, `password`) VALUES (0, '$name', '$email', '$password')");
     if(mysqli_error($CONNECT)){
         exit(mysqli_error($CONNECT));
     }
     $enc_email = str_replace("=", "", base64_encode($email));
-    $reslut = mail($email, "Conformation", "Чтобы подтвердить перейдите по ссылке: <a>localhost/newproject/account/confirm/email/</a>$enc_email");
+    echo $email;
+    $messqge = 'Чтобы подтвердить перейдите по ссылке: localhost/newproject/account/confirm/email/' . $enc_email;
+    $reslut = mail($email, 'Confirmation', $enc_email);
     if($result){
         echo 'письмо ушло успешно'; 
     }

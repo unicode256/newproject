@@ -2,7 +2,7 @@
 ob_start();
 define('HOST', 'localhost');
 define('USER', 'root');
-define('PASS', '12042001');
+define('PASS', '12042001data');
 define('DB', 'exp_users');
 
 /*function sendMessage($to_id, $from_id, $msg){
