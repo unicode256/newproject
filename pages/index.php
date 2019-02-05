@@ -1,5 +1,5 @@
 <?php
-    //Ulogin(0);
+    Ulogin(0);
     echo 'Это главная странца' . '<br />';
     messageShow();
 ?>

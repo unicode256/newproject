@@ -1,8 +1,6 @@
-<?
-echo $_SERVER['HTTP_REFERER'];
+<?php
 Ulogin(0);
 Head('Вход', '#');
-
 ?>
 <h1>Вход</h1>
 <form action="account/login" method="post">
@@ -12,7 +10,7 @@ Head('Вход', '#');
     <input type="password" name="password"><br />
     <input name="submit" type="submit" value="Войти">
 </form>
-<?
+<?php
 messageShow();
 Footer();
 ?>

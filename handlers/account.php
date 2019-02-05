@@ -1,5 +1,5 @@
 <?php
-//Ulogin(0);
+Ulogin(0);
 if($module == 'registration' and $_POST['submit']){
     if(!$_POST['name'] ||! $_POST['email'] || !$_POST['password']){
         messageSend('Надо заполнить всю форму');
@@ -27,38 +27,36 @@ if($module == 'registration' and $_POST['submit']){
             messageSend('Пароль должен содержать хотя бы одну латинскую букву в верхнем регистре');
         }
     }
-    $row = mysqli_fetch_array(mysqli_query($CONNECT, "SELECT `email` FROM `users` WHERE `email` = '$email'"));
+    $row = mysqli_fetch_array(mysqli_query($CONNECT, "SELECT `email` FROM `USERS` WHERE `email` = '$email'"));
     if($row['email']){
         messageSend('Этот адрес уже существует');
     }
-    mysqli_query($CONNECT, "INSERT INTO `users` (`activation`, `name`, `email`, `password`) VALUES (1, '$name', '$email', '$password')");
+    mysqli_query($CONNECT, "INSERT INTO `USERS` (`activation`, `name`, `email`, `password`) VALUES (0, '$name', '$email', '$password')");
     if(mysqli_error($CONNECT)){
         exit(mysqli_error($CONNECT));
     }
     $enc_email = str_replace("=", "", base64_encode($email));
-    $reslut = mail($email, "Conformation", "Чтобы подтвердить перейдите по ссылке: <a>localhost/newproject/account/confirm/email/</a>$enc_email");
-    if($result){
-        echo 'письмо ушло успешно'; 
+    $result = mail($email, "Conformation", "Чтобы подтвердить перейдите по ссылке: https://antirust-requisitio.000webhostapp.com/account/confirm/email/$enc_email");
+    if(!$result){
+        messageSend('не получилось отправить письмо(((('); 
     }
-    else {
-        echo 'не получилось отправить письмо((((';
-    }
+    messageSend('Регистрация заврешена, на указанный емаил отправлено письмо для подтверждения регистрации');
 }
 
 else if($module == 'confirm' and $param['email']){
     $enc_email = $param['email'];
-    $email = base64_decode($email);
-    $result = mysqli_query($CONNECT, "SELECT `activation` FROM `users` WHERE `email` = '$email'");
-    $row = myqli_fetch_array($result);
-    if($row['activation'] == 0){
-        mysqli_query($CONNECT, "UPDATE `users` SET `activation` = 1 WHERE `email` = '$email'");
-        echo '<p>' . $row['name'] . ', спасибо за регистрацию. Теперь вы можете <a href="login">войти</a></p>';
+    $email = base64_decode($enc_email);
+    $result = mysqli_query($CONNECT, "SELECT `activation`, `name` FROM `USERS` WHERE `email` = '$email'");
+    $row = mysqli_fetch_array($result);
+    if(mysqli_num_rows($result) == 0){
+        echo 'сори, такой страницы не существует((';
+    }
+    else if($row['activation'] == 0){
+        mysqli_query($CONNECT, "UPDATE `USERS` SET `activation` = 1 WHERE `email` = '$email'");
+        echo '<p>' . $row['name'] . ', спасибо за регистрацию. Теперь вы можете <a href="/login">войти</a></p>';
     }
     else if($row['activation'] == 1){
-        echo '<p>' . $row['name'] . ', регистрация вашего аккаунта уже была подтверждена. <a href="login">Войти</a></p>';
-    }
-    else if(mysqli_num_rows($result) == 0){
-        echo 'сори, такой страницы не существует((';
+        echo '<p>' . $row['name'] . ', регистрация вашего аккаунта уже была подтверждена. <a href="/login">Войти</a></p>';
     }
 }
 
@@ -68,7 +66,7 @@ else if($module = 'login' and $_POST['submit']){
     if(!$_POST['email'] || !$_POST['password']){
         messageSend('Вы не написали емаил или пароль');
     }
-    $row = mysqli_fetch_array(mysqli_query($CONNECT, "SELECT * FROM `users` WHERE `email` = '$email'"));
+    $row = mysqli_fetch_array(mysqli_query($CONNECT, "SELECT * FROM `USERS` WHERE `email` = '$email'"));
     if($row['password'] != $password){
         messageSend('Неверный емаил или пароль');
     }
@@ -79,6 +77,6 @@ else if($module = 'login' and $_POST['submit']){
     $_SESSION['user_name'] = $row['name'];
     $_SESSION['user_email'] = $row['email'];
     $_SESSION['user_log_in'] = 1;
-    exit(header('Location: /newproject/profile'));
+    exit(header('Location: /profile'));
 }
 ?>

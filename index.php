@@ -33,11 +33,12 @@ else if ($page == 'confirmation') include 'pages/confirmation.php';
 else if ($page == 'profile') include 'pages/profile.php';
 
 function Ulogin($param){
-    if($param == 1 and empty($_SESSION['user_log_in'])){
-        messageSend('Указанная страница доступна только для пользователей, чтобы просматривать эту страницу, войдите в свою учётную запись', '/newproject/login');
+    if($param <= 0 and $_SESSION['user_log_in'] != $param){
+        messageSend('Указанная страница доступна только для гостей', '/profile');
+
     }
-    else if ($param == 0 and $_SESSION['user_log_in'] == 1){
-        header('Location: /newproject/profile');
+    else if ($_SESSION['user_log_in'] != $param){
+        messageSend('Указанная страница доступна только для пользователей, чтобы просматривать эту страницу, войдите в свою учётную запись', '/login');
     }
 }
 
@@ -70,9 +71,9 @@ function messageSend($error_msg, $redirect = ''){
 }
 
 function messageShow(){
-    if($_SESSION['error_message']){
+    if(!empty($_SESSION['error_message'])){
         $message = $_SESSION['error_message'];
-        echo $message . '<br />' . $_SERVER['HTTP_REFERER'] . '<br />';
+        echo $message;
         $_SESSION['error_message'] = array();
     }
 }
