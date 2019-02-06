@@ -32,7 +32,9 @@ if($module == 'registration' and $_POST['submit']){
         messageSend('Этот адрес уже существует');
     }
     mysqli_query($CONNECT, "INSERT INTO `USERS` (`activation`, `name`, `email`, `password`) VALUES (0, '$name', '$email', '$password')");
-
+    if(!$CONNECT){
+        messageSend('Ошибка: ' . mysqli_error());
+    }
     if(mysqli_error($CONNECT)){
         exit(mysqli_error($CONNECT));
     }

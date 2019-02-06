@@ -1,7 +1,10 @@
 <?php
 session_start();
 include_once 'setting.php';
-$CONNECT = mysqli_connect(HOST, USER, PASS, DB) or die ('Ошибка соединения с сервером');
+$CONNECT = mysqli_connect(HOST, USER, PASS, DB);
+if(!$CONNECT){
+    echo mysqli_error();
+}
 //if($CONNECT) echo 'ok';
 //else echo 'no';
 
@@ -31,11 +34,11 @@ else if ($page == 'account') include 'handlers/account.php' ;
 else if ($page == 'login') include 'pages/login.php';
 else if ($page == 'confirmation') include 'pages/confirmation.php';
 else if ($page == 'profile') include 'pages/profile.php';
+else if($page == 'mob') include 'pages/index-mob.php';
 
 function Ulogin($param){
     if($param <= 0 and $_SESSION['user_log_in'] != $param){
         messageSend('Указанная страница доступна только для гостей', '/profile');
-
     }
     else if ($_SESSION['user_log_in'] != $param){
         messageSend('Указанная страница доступна только для пользователей, чтобы просматривать эту страницу, войдите в свою учётную запись', '/login');

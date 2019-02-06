@@ -1,9 +1,9 @@
 <?php
 ob_start();
 define('HOST', 'localhost');
-define('USER', 'id8649077_root');
-define('PASS', '12042001');
-define('DB', 'id8649077_users');
+define('USER', 'antidati_root');
+define('PASS', '12042001data');
+define('DB', 'antidati_users');
 
 /*function sendMessage($to_id, $from_id, $msg){
 $query_1 = "SELECT `id` FROM `dialog` WHERE `send` = '$from_id' AND `recieve` = '$to_id' OR `send` = '$to_id' AND `recieve` = '$from_id'";

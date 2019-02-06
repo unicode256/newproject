@@ -1,6 +1,7 @@
 <?php
 Ulogin(0);
 Head('Вход', '#');
+
 ?>
 <h1>Вход</h1>
 <form action="account/login" method="post">

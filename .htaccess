@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /newproject/
+RewriteBase /
 Options All -Indexes
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-s [OR]
@@ -7,4 +7,4 @@ RewriteCond %{REQUEST_FILENAME} !-l [OR]
 RewriteCond %{REQUEST_FILENAME} !-d
 #RewriteRule ^resource/(.*)$ resource/$1 [L]
 RewriteRule ^.*$ [NC,L]
-RewriteRule ^.*$ /newproject/index.php [NC,L]
+RewriteRule ^.*$ /index.php [NC,L]
