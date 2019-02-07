@@ -24,7 +24,10 @@ body{
     height: 100%;
     font-family: Helvetica;
     font-family: 'TTDrugs-Thin';
-    background: url('../images/IMG_4032.jpeg') no-repeat right;
+    background: url('../images/IMG_4039.JPG');
+    /*background: filter(url('../images/IMG_4039.JPG'), blur(5px));*/
+    background-position: center;
+    background-repeat: no-repeat;
     -webkit-background-size: cover; 
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -67,6 +70,9 @@ a {
 p, input {
     font-size: 50%;
     color: #fff;
+}
+p {
+    text-shadow: black 1px 1px 0, black -1px -1px 0, black -1px 1px 0, black 1px -1px 0;
 }
 input {
     font-family: 'TTDrugs-Thin';

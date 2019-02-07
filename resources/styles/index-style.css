@@ -24,18 +24,23 @@ body{
     height: 100%;
     font-family: Helvetica;
     font-family: 'TTDrugs-Thin';
-    background: url('../images/IMG_4032.jpeg') no-repeat center;
+    background-color: #000;
+    background: url('../images/IMG_4039.JPG');
+    /*background: filter(url('../images/IMG_4039.JPG'), blur(5px));*/
+    background-position: center;
+    background-repeat: no-repeat;
     -webkit-background-size: cover; 
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     font-size: 60px;
-    text-shadow: 2px 2px 7px #D3D3D3;
     min-width: 1000px;
     text-align: center;
     color: #fff;
 }
-
+p {
+    text-shadow: black 1px 1px 0, black -1px -1px 0, black -1px 1px 0, black 1px -1px 0;
+}
 #logo {
     font-family: 'vegurlight';
     font-size: 140%;
@@ -48,7 +53,7 @@ body{
     margin-right: auto;
     margin-top: 2%;
     width: 70%;
-    min-width: 900px;
+    min-width: 1000px;
 }
 a{
     color: #fff;
@@ -71,11 +76,15 @@ a{
     font-size: 60%;
 }
 .buttons {
-    width: 100%;
+    width: 70%;
+    min-width: 1000px;
     padding: 0;
     text-align: left;
     overflow: auto;
-    margin-top: 20%;
+    position: fixed;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 150px;
 }
 .button {
     text-align: center;
@@ -88,7 +97,7 @@ a{
     background-color: #4d7cb3;
     padding-top: 15px;
     padding-bottom: 15px;
-    font-size: 45%;
+    font-size: 50%;
     border-radius: 9px;
     transition-property: background-color;
     transition-duration: .3s;
