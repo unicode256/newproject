@@ -11,7 +11,7 @@ Head('ANTIDATING | Вход', '../resources/styles/login-style.css');
         <input type="text" name="email">
         <p class="label">Введите ваш пароль:</p>
         <input type="password" name="password"><br />
-        <input type="submit" value="Войти">
+        <input type="submit" name="submit" value="Войти">
     </form>
 </div>
 <div class="footer">
