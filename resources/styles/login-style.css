@@ -1,0 +1,151 @@
+@font-face {
+    font-family: 'vegurlight';
+    src: url('../fonts/vegur-light-webfont.woff2') format('woff2'),
+         url('../fonts/vegur-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TTDrugs-Thin';
+    src: url('../fonts/TTDrugs-Thin.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h1, p, div, form, img {
+    margin: 0;
+    /*border: 1px solid white;*/
+}
+html {
+    min-height: 100%;
+}
+body{
+	padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: Helvetica;
+    font-family: 'TTDrugs-Thin';
+    background: url('../images/IMG_4032.jpeg') no-repeat right;
+    -webkit-background-size: cover; 
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-size: 60px;
+    text-shadow: 2px 2px 7px #D3D3D3;
+    min-width: 1000px;
+    text-align: center;
+    color: #fff;
+}
+img {
+    margin: 0;
+}
+#bottom_line {
+    padding-bottom: 30px;
+    margin-bottom: 8%;
+    font-size: 65%;
+    border-bottom: 1px solid #fff;
+}
+#logo {
+    font-family: 'vegurlight';
+    font-size: 140%;
+    margin-bottom: 10px;
+
+}
+#main {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    width: 45%;
+    min-width: 650px;
+}
+a{
+    color: #fff;
+    text-decoration: none;
+}
+a {
+    font-size: 50%;
+}
+p, input {
+    font-size: 50%;
+    color: #fff;
+}
+input {
+    font-family: 'TTDrugs-Thin';
+    outline: none;
+    margin: 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.15);
+    width: 99.4%;
+    border: 2px solid #fff;
+    border-radius: 9px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    transition-property: background-color;
+    transition-duration: .3s;
+}
+input[type="password"]{
+    margin-bottom: 20px;
+}
+input[type="submit"]{
+    background-color: #4d7cb3;
+    border: none;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    border-radius: 9px;
+    width: 100%;
+    transition-property: background-color;
+    transition-duration: .3s;
+}
+input[type="submit"]:hover {
+    background-color: #76a6de;
+    transition-property: background-color;
+    transition-duration: .3s;
+    cursor: pointer;
+}
+input:focus {
+    background-color: rgba(255, 255, 255, 0.4);
+    transition-property: background-color;
+    transition-duration: .3s;
+}
+.footer {
+    /*background-color: rgba(0, 0, 0, 0.8);*/
+    background-color: rgba(255, 255, 255, 0.15);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    min-width: 900px;
+}
+.fbuttons {
+    width: 39.8%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 758px;
+}
+.fbutton1 {
+    width: 226px;
+}
+.fbutton2 {
+    width: 219px;
+}
+.fbutton3 {
+    width: 145px;
+}
+.fbutton {
+    display: block;
+    text-align: left;
+    float: left;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    transition-property: color;
+    transition-duration: .2s;
+}
+.fbutton:hover {
+    color: #bababa;
+    transition-property: color;
+    transition-duration: .2s;
+}
+.fbutton2, .fbutton3 {
+    margin-left: 11%;
+}
