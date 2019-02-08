@@ -11,6 +11,7 @@ if($module == 'logout' and $_SESSION['user_log_in'] == 1){
 
 Ulogin(0);
 
+//-------------Восстановление пароля
 if ($module == 'restore' and $_POST['submit']){
     if(!$_POST['email']){
         messageSend('Вы не написали ваш адрес эл. почты');
@@ -24,10 +25,10 @@ if ($module == 'restore' and $_POST['submit']){
     if(mysqli_num_rows($res_of_query) == 0){
         messageSend('Пользователь не найден');
     }
-    $enc_email = str_replace("=", "", base64_encode($email));
+    $enc_email = substr(str_replace("=", "", base64_encode($email)), -5) . substr(str_replace("=", "", base64_encode($email)), 0, -5);
     $sec_code_decoded = rand(11000, 30000);
-    $sec_code = str_replace("=", "", base64_encode($sec_code_decoded));
-    $result = mail($email, "Восстановление", "Чтобы восстановить пароль, перейдите на страницу восстановления по ссылке: antidating.xyz/account/restore/em/$enc_email/code/$sec_code");
+    $sec_code = substr(str_replace("=", "", base64_encode($sec_code_decoded)), -2) . substr(str_replace("=", "", base64_encode($sec_code_decoded)), 0, -2);
+    $result = mail($email, "Восстановление", "Чтобы восстановить пароль, перейдите на страницу восстановления по ссылке: http://antidating.xyz/account/restore/em/$enc_email/code/$sec_code");
         if(!$result){
             messageSend('не получилось отправить письмо((((');
         }
@@ -41,13 +42,35 @@ else if ($module == 'restore' and $param['em'] and $param['code'] and $_POST['su
     if(!$_POST['password'] or !$_POST['password_repeat']){
         messageSend('Заполните пожалуйста все поля');
     }
-    $email = base64_decode($param['em']);
-    $sec_code = base64_decode($param['code']);
+    $email_decoded = substr($param['em'], 5) . substr($param['em'], 0, 5);
+    $email = base64_decode($email_decoded);
+    $sec_code_decoded = substr($param['code'], 2) . substr($param['code'], 0, 2);
+    $sec_code = base64_decode($sec_code_decoded);
     $new_sec_code = rand(30001, 60000);
     $password = formChars($_POST['password']);
     $password_repeat = formChars($_POST['password_repeat']);
     if($password != $password_repeat){
         messageSend('Пароли не совпадают');
+    }
+    if(preg_match("#[а-яА-Я]*#", $password)){
+        messageSend('Пароль может содержать буквы только латинского алфавита');
+    }
+    if(!preg_match("#^[0-9a-zA-Z]{6,}#", $password)){
+        messageSend('Пароль должен содержать не менее 6 символов');
+    }
+    else {
+        if(!preg_match("#(?=.*[0-9])#", $password)){
+            messageSend('Пароль должен содержать хотя бы одну цифру');
+        }
+        if(!preg_match("#(?=.*[A-z])#", $password)){
+            messageSend('Пароль должен содержать хотя бы одну букву в верхнем и одну букву в нижнем регистре');
+        }
+        if(!preg_match("#(?=.*[a-z])#", $password)){
+            messageSend('Пароль должен содержать хотя бы одну латинскую букву в нижнем регистре');
+        }
+        if(!preg_match("#(?=.*[A-Z])#", $password)){
+            messageSend('Пароль должен содержать хотя бы одну латинскую букву в верхнем регистре');
+        }
     }
     mysqli_query($CONNECT, "UPDATE `USERS` SET `password` = '$password' WHERE `email` = '$email' AND `sec_code` = '$sec_code'");
     mysqli_query($CONNECT, "UPDATE `USERS` SET `sec_code` = '$new_sec_code' WHERE `email` = '$email'");
@@ -55,8 +78,10 @@ else if ($module == 'restore' and $param['em'] and $param['code'] and $_POST['su
 }
 
 else if ($module == 'restore' and $param['em'] and $param['code']){
-    $email = base64_decode($param['em']);
-    $sec_code = base64_decode($param['code']);
+    $email_decoded = substr($param['em'], 5) . substr($param['em'], 0, 5);
+    $email = base64_decode($email_decoded);
+    $sec_code_decoded = substr($param['code'], 2) . substr($param['code'], 0, 2);
+    $sec_code = base64_decode($sec_code_decoded);
     $res_of_query = mysqli_query($CONNECT, "SELECT `email` FROM `USERS` WHERE `email` = '$email' AND `sec_code` = '$sec_code'");
     $row = mysqli_fetch_array($res_of_query);
     if(mysqli_num_rows($res_of_query) == 0){
@@ -66,9 +91,9 @@ else if ($module == 'restore' and $param['em'] and $param['code']){
         echo 'Смена пароля<br />
         <form action="/account/restore/em/' . $param['em'] . '/code/' . $param['code'] . '" method="post">
             Введите новый пароль:<br />
-            <input type="password" name="password"><br />
+            <input type="text" name="password"><br />
             Введите новы пароль повторно:<br />
-            <input type="password" name="password_repeat"><br />
+            <input type="text" name="password_repeat"><br />
             <input type="submit" name="submit_changes">
         </form>';
         if(!messageShow()){
@@ -76,7 +101,7 @@ else if ($module == 'restore' and $param['em'] and $param['code']){
         }
     }
 }
-
+//-------------Восстановление пароля
 
 if ($module == 'registration' and $_POST['submit']){
     if(!$_POST['name'] ||! $_POST['email'] || !$_POST['password']){
@@ -85,7 +110,7 @@ if ($module == 'registration' and $_POST['submit']){
     $name = formChars($_POST['name']);
     $email = formChars($_POST['email']);
     $password = formChars($_POST['password']);
-    if(!preg_match("#^([-a-z0-9!$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)+(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|ru|com|by))$#", $email)){
+    if(!preg_match("#^([-a-z0-9!$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)+(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|ru|com|by|ua))$#", $email)){
         messageSend('Некорректный адрес электронной почты');
     }
     if(!preg_match("#^[0-9a-zA-Z]{6,}#", $password)){
@@ -117,14 +142,14 @@ if ($module == 'registration' and $_POST['submit']){
         exit(mysqli_error($CONNECT));
     }
     $enc_email = str_replace("=", "", base64_encode($email));
-    $result = mail($email, "Conformation", "Чтобы подтвердить перейдите по ссылке: http://antidating.xyz/account/confirm/email/$enc_email");
+    $result = mail($email, "Conformation", "Чтобы подтвердить перейдите по ссылке: http://antidating.xyz/account/confirm/em/$enc_email");
     if(!$result){
         messageSend('не получилось отправить письмо((((');
     }
     messageSend('Регистрация заврешена, на указанный емаил отправлено письмо для подтверждения регистрации');
 }
 
-else if($module == 'confirm' and $param['email']){
+else if($module == 'confirm' and $param['em']){
     $enc_email = $param['email'];
     $email = base64_decode($enc_email);
     $result = mysqli_query($CONNECT, "SELECT `activation`, `name` FROM `USERS` WHERE `email` = '$email'");
