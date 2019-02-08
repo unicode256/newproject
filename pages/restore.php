@@ -1,20 +1,15 @@
 <?php
 Ulogin(0);
-Head('ANTIDATING | Вход', '../resources/styles/login-style.css');
-
+Head('ANTIDATING | Восстановление', '../resources/styles/login-style.css');
 ?>
 <div id="main">
     <h1 id="logo"><img src="../resources/images/WhiteLogo.png" alt="ANTIDATING"></h1>
-    <form action="account/login" method="post">
-        <p id="bottom_line">Вход в учётную запись</p>
+    <form action="account/restore" method="post">
+        <p id="bottom_line">Восстановление пароля</p>
         <p class="label">Введите ваш адрес эл. почты:</p>
         <input type="text" name="email">
-        <p class="label">Введите ваш пароль:</p>
-        <input type="password" name="password"><br />
-        <input type="submit" name="submit" value="Войти">
-        <input type="checkbox" name="remember"><span>Запомнить меня</span>
+        <input type="submit" name="submit" value="Восстановить">
     </form>
-    <a href="/restore">Я забыл(а) свой пароль</a>
 </div>
 <div class="footer">
     <div class="fbuttons">

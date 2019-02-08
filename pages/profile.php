@@ -2,6 +2,7 @@
 Ulogin(1);
 Head('Ваш профиль', '#');
 ?>
+<a href="account/logout">Выйти</a><br />
 <h2>Ваш профиль:</h2>
 
 <?php
