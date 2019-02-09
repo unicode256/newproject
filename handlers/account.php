@@ -52,7 +52,7 @@ else if ($module == 'restore' and $param['em'] and $param['code'] and $_POST['su
     if($password != $password_repeat){
         messageSend('Пароли не совпадают');
     }
-    if(preg_match("#[а-яА-Я]*#", $password)){
+    if(preg_match("#([а-яА-Я]+)#", $password)){
         messageSend('Пароль может содержать буквы только латинского алфавита');
     }
     if(!preg_match("#^[0-9a-zA-Z]{6,}#", $password)){

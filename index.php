@@ -41,6 +41,7 @@ else if ($page == 'login') include 'pages/login.php';
 else if ($page == 'confirmation') include 'pages/confirmation.php';
 else if ($page == 'profile') include 'pages/profile.php';
 else if ($page == 'restore') include 'pages/restore.php';
+else if ($page == 'users' || $module == 'users') include 'pages/users.php';
 
 function Ulogin($param){
     if($param <= 0 and $_SESSION['user_log_in'] != $param){
@@ -55,7 +56,7 @@ function formChars($string){
     return nl2br(htmlspecialchars(trim($string), ENT_QUOTES), false);
 }
 
-function Head($title, $style){
+function Head($title, $style, $param = ''){
     echo '<!DOCTYPE html>
     <html>
         <head>
@@ -64,6 +65,9 @@ function Head($title, $style){
             <link href="' . $style . '" type="text/css" rel="stylesheet">
         </head>
         <body>';
+        if($param == 1){
+            echo '<a href="/profile">Мой профиль</a> | <a href="/users">Пользователи</a> | <a href="account/logout">Выход</a>';
+        }
 }
 
 function Footer(){
